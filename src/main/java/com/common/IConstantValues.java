@@ -8,7 +8,7 @@ public interface IConstantValues {
 		
 		//Chrome browser driver details
 		String CHROME_KEY = "webdriver.chrome.driver";
-		String CHROME_VALUE = "D:\\Projects\\OLHD\\OLHD_NEW\\driver\\chromedriver.exe";
+		String CHROME_VALUE = ".\\driver\\chromedriver.exe";
 		
 	/*	String GECKO_KEY = "webdriver.gecko.driver";
 		String GECKO_VALUE = ".\\driver\\geckodriver.exe";*/

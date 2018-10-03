@@ -14,7 +14,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -26,24 +29,45 @@ public class BaseTest implements IConstantValues{
 		System.setProperty(CHROME_KEY, CHROME_VALUE);
 	}
 	public static WebDriver driver;
+	
+	@SuppressWarnings("deprecation")
 	@BeforeTest
 	@Parameters({"browser"})
-	public void selectBrowser(String browser){
-		
-		if (browser.equals("chrome")){
-			driver=new ChromeDriver();
-		}else if(browser.equals("firefox")){
-			driver=new FirefoxDriver();
-		}
-		//Calling property method to read URL and launch
-		String url=Lib.getProperty(CONFIG_PATH, "URL");
-		driver.manage().window().maximize();
-		driver.get(url);
-		
-		String ITO=Lib.getProperty(".\\config.properties", "ImplicitTimeOut");
+public static WebDriver setup(String browser) throws Exception{
+		String ITO=Lib.getProperty(CONFIG_PATH, "ImplicitTimeOut");
 		int timeoutPeriod=Integer.parseInt(ITO);
-		driver.manage().timeouts().implicitlyWait(timeoutPeriod, TimeUnit.SECONDS);
-}
+		if (browser.equalsIgnoreCase("chrome")){
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--start-maximized");
+			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+			driver=new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(timeoutPeriod, TimeUnit.SECONDS);
+		}else if(browser.equalsIgnoreCase("firefox")){
+			driver=new FirefoxDriver();
+			}else if(browser.equalsIgnoreCase("IE")){
+			DesiredCapabilities capabilities = DesiredCapabilities
+					.internetExplorer();
+			capabilities
+			.setCapability(
+					InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+					true);
+			capabilities.setCapability("requireWindowFocus", true);
+			driver = new InternetExplorerDriver(capabilities);
+		}
+		return driver;
+		}
+	
+	public static void openURL() throws Exception {
+		String url=Lib.getProperty(CONFIG_PATH, "URL");
+		driver.get(url);
+	
+
+	}
+	public static WebDriver driver() {
+		return driver;
+	}
 	public void takeScreeshot(String testname){
 		Date d=new Date();
 		String currentdate = d.toString().replaceAll(":", "_");
