@@ -12,6 +12,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 
 
@@ -100,9 +102,16 @@ public class XLUtilities implements IConstantValues {
 		int row =1;
 		int col=1;*/
 		XLUtilities ul = new XLUtilities();
-				int value= ul.getRowCount(EXCEL_PATH, "consignmentnumber");
-				int columnCount = ul.getColumnCount(EXCEL_PATH, "consignmentnumber", 0);
-		System.out.println(columnCount);
+				/*int value= ul.getRowCount(EXCEL_PATH, "consignmentnumber");
+				int columnCount = ul.getColumnCount(EXCEL_PATH, "consignmentnumber", 0);*/
+				/*int rowIndex=ul.getRowIndex(EXCEL_PATH, "consignmentnumber", "Reshma");
+				int colIndex=ul.getColIndex(EXCEL_PATH, "consignmentnumber", 0, "Ayesha");
+				//System.out.println(value);
+				System.out.println(rowIndex+":rowIndex");
+		System.out.println(colIndex+":colIndex");*/
+	//ul.clickFromExcel(EXCEL_PATH, "consignmentnumber", "Reshma", "Ayesha");
+		String result=ul.getvalueFromxcell(EXCEL_PATH, "consignmentnumber", "Reshma", "Heena");
+		System.out.println(result+":result");
 	}
 
 	public int getRowCount(String sFileName, String sSheetName) throws EncryptedDocumentException, InvalidFormatException, IOException{
@@ -110,7 +119,7 @@ public class XLUtilities implements IConstantValues {
 		Workbook wb = WorkbookFactory.create(fis);
 		Sheet sh = wb.getSheet(sSheetName);
 		
-		return sh.getLastRowNum();
+		return sh.getLastRowNum()+1;
 		
 	}
 	public int getColumnCount(String sFileName, String sSheetName, int row) throws EncryptedDocumentException, InvalidFormatException, IOException{
@@ -121,25 +130,56 @@ public class XLUtilities implements IConstantValues {
 		return rw.getLastCellNum();
 		}
 	
-	public int getRowIndex(String sFileName,String sSheetName, String iRow) throws EncryptedDocumentException, InvalidFormatException, IOException{
+	public int getRowIndex(String sFileName,String sSheetName, String testCaseName) throws EncryptedDocumentException, InvalidFormatException, IOException{
 		int rowCount = getRowCount(sFileName, sSheetName);
 		int i;
-		System.out.println(rowCount+"rowCount");
+		//System.out.println(rowCount+": rowCount");
 		FileInputStream fis = new FileInputStream(sFileName);
 		Workbook wb = WorkbookFactory.create(fis);
 		Sheet sh = wb.getSheet(sSheetName);
-		for (i=1; i < rowCount+1; i++) {
-			if(iRow.equalsIgnoreCase(sh.getRow(i).getCell(0).toString())) {
-				break;
+		for (i=1; i < rowCount; i++) {
+			try {
+				if(testCaseName.equalsIgnoreCase(sh.getRow(i).getCell(0).toString())) {
+					//System.out.println("loop entered");
+					break;
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
+			
 		}
 		return i;
-	
-		
-/*		Row rw = sh.getRow(iRow);
-		Cell cl = rw.getCell(iCol);
-		return cl.getStringCellValue();*/
-		
 	}
+	public int getColIndex(String sFileName,String sSheetName, int row, String columnId) throws EncryptedDocumentException, InvalidFormatException, IOException{
+		int colCount = getColumnCount(sFileName, sSheetName, row);
+		int i;
+		//System.out.println(colCount+": colCount");
+		FileInputStream fis = new FileInputStream(sFileName);
+		Workbook wb = WorkbookFactory.create(fis);
+		Sheet sh = wb.getSheet(sSheetName);
+		for (i=1; i < colCount; i++) {
+			try {
+				if(columnId.equalsIgnoreCase(sh.getRow(0).getCell(i).toString())) {
+					//System.out.println("loop entered");
+					break;
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
+		return i;
+	}
+	//public void clickFromExcel(WebElement element, String sFileName,String sSheetName, String irow, String iCol) throws EncryptedDocumentException, InvalidFormatException, IOException {
+		public String getvalueFromxcell(String sFileName,String sSheetName, String testCaseName, String columnId) throws EncryptedDocumentException, InvalidFormatException, IOException {
+			//XLUtilities ul = new XLUtilities();
+			int rowIndex = getRowIndex(sFileName, sSheetName, testCaseName);
+			int colIndex = getColIndex(sFileName, sSheetName, 0, columnId);
+			FileInputStream fis = new FileInputStream(sFileName);
+			Workbook wb = WorkbookFactory.create(fis);
+			Sheet sh = wb.getSheet(sSheetName);
+			return sh.getRow(rowIndex).getCell(colIndex).toString();		
+		}
+
 
 }

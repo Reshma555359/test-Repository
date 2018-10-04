@@ -58,7 +58,7 @@ public class NavigationOfPages extends BaseTest{
 		System.out.println("consignInfotxt "+receptacleInfotxt+"expectedConsignInfotxt "+expectedreceptacleInfotxt);
 		Assert.assertEquals(expectedreceptacleInfotxt, receptacleInfotxt);
 		*/
-		cdp.clickReceptacleID();
+		//cdp.clickReceptacleID();
 	
 		
 	}

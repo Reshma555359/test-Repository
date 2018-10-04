@@ -51,7 +51,7 @@ public class SearchConsignmentPage implements IConstantValues{
           String text = errorMsg.getText();
           return text;
 }
-      @SuppressWarnings("finally")
+      /*@SuppressWarnings("finally")
 	public boolean errorMsgdisplayed() {
     	  boolean displayed = false;
     	  try {
@@ -64,6 +64,6 @@ public class SearchConsignmentPage implements IConstantValues{
 		}
     	  
     	  
-}
+}*/
 
 }
