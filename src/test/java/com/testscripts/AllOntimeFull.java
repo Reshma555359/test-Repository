@@ -23,6 +23,7 @@ public class AllOntimeFull extends BaseTest {
 	String errorMessage="errormessage";
 	String SheetName="consignmentnumber";
 	String ReceptacleID;
+	String ReceptacleID2;
 	
 	@BeforeClass
 	public void login() throws Exception {
@@ -32,10 +33,11 @@ public class AllOntimeFull extends BaseTest {
 	ul=new XLUtilities();
 	cdp=new ConsignmentDetailsPage(driver);
 	ReceptacleID=ul.getvalueFromxcell(EXCEL_PATH, SheetName, "Reshma", "Ayesha");
+	ReceptacleID2=ul.getvalueFromxcell(EXCEL_PATH, SheetName, "Reshma", "Heena");
 	}
 	@Test
 	public void validateCurrentStatus() throws Exception {
-	cf.click(cdp.ReceptacleID(), "working");
+	//cf.click(cdp.ReceptacleID(ReceptacleID2), "working");
 		/*scp.navigateToSearchConsignment();
 		//scp.enterConsignmentNumber(1,0);
 		cf.sendKeys(scp.consignmentNumber, ReceptacleID, "enteredvalue");

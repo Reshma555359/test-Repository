@@ -9,7 +9,9 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 public class CommonFunctions {
 	WebDriver driver = null;
@@ -131,8 +133,8 @@ public class CommonFunctions {
 	}
 	
 	public void click(WebElement element, String elementTitle){
-		System.out.println("Click on - " + elementTitle );
-		element.click();
+			System.out.println("Click on - "+ elementTitle );	
+			element.click();
 	}
 	
 	public void clear(WebElement element, String elementTitle){

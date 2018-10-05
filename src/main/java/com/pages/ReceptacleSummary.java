@@ -7,6 +7,12 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ReceptacleSummary {
 	
+	@FindBy(xpath="//strong[text()='Receptacle Details']")
+	public WebElement receptacleDetails;
+	
+	@FindBy(xpath="//tbody/tr[1]/td/a")
+	public WebElement event;
+	
 	//PRECON Information fields
 	@FindBy(xpath="//span[contains(@id,'Receptacle-type')]")
 	public WebElement preconReceptacleType;

@@ -7,6 +7,9 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PreconDetailsPage {
 
+	@FindBy(xpath="//h3[text()='Transport Information']")
+	public WebElement preconTransInfo;
+	
 	@FindBy(xpath="//span[@id='consignment-Number']")
 	public WebElement preconConsignNo;
 	

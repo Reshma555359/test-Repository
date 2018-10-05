@@ -11,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.common.BaseTest;
 import com.common.XLUtilities;
@@ -44,10 +46,14 @@ public class ConsignmentDetailsPage extends BaseTest {
 	 }
 	 
 	 //need to optimize webtable xpath
-	 public WebElement ReceptacleID() throws EncryptedDocumentException, InvalidFormatException, IOException {
-		 XLUtilities ul = new XLUtilities();
-		 String ReceptacleID=ul.getvalueFromxcell(EXCEL_PATH, "consignmentnumber", "Reshma", "Heena");
-		 return driver.findElement(By.xpath("//tbody/tr/td/a[text()='"+ReceptacleID+"']"));
-		  }
+	 public WebElement ReceptacleID(String ReceptacleID2) throws EncryptedDocumentException, InvalidFormatException, IOException {
+		 System.out.println("ReceptacleID:"+ReceptacleID2);
+		  WebElement element=driver.findElement(By.xpath("//tbody/tr/td/a[text()='"+ReceptacleID2+"']"));	
+		  System.out.println("entered");
+		  WebDriverWait wait = new WebDriverWait(driver, 10);
+		  System.out.println("inside");
+		  wait.until(ExpectedConditions.stalenessOf(element));
+		  return element;
+	 }
 
 }

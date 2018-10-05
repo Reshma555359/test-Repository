@@ -19,6 +19,13 @@ public class ConsignmentSummaryPage implements IConstantValues{
 	@FindBy(xpath="//a[contains(.,'Consignment Details')]")
 	public WebElement consignmentDetails;
 	
+	@FindBy(xpath="//strong[text()='Handover Information']")
+	public WebElement handoverInfo;
+	
+	@FindBy(xpath="//a[text()='Consignment Summary']")
+	public WebElement consignSummary;
+	
+	
 	@FindBy(xpath="//td[contains(@ng-bind,'handoverOriginCutoffDateTime')]")
 	public WebElement handoverOriginCutOffDT;
 	
@@ -85,6 +92,10 @@ public class ConsignmentSummaryPage implements IConstantValues{
 	
 	@FindBy(xpath="//a[contains(@ng-bind,'eventDescription ')]")
 	public WebElement eventDescription;
+	
+	@FindBy(xpath="(//a[contains(@ng-bind,'eventDescription ')])[1]")
+	public WebElement eventDescriptionFirst;
+	
 	
 	@FindBy(xpath="//td[contains(@ng-bind,'eventDateTime ')]")
 	public WebElement eventDateTime;

@@ -110,7 +110,7 @@ public class XLUtilities implements IConstantValues {
 				System.out.println(rowIndex+":rowIndex");
 		System.out.println(colIndex+":colIndex");*/
 	//ul.clickFromExcel(EXCEL_PATH, "consignmentnumber", "Reshma", "Ayesha");
-		String result=ul.getvalueFromxcell(EXCEL_PATH, "consignmentnumber", "Reshma", "Heena");
+		String result=ul.getvalueFromxcell(EXCEL_PATH, "TestData", "CommonTestData", "ReceptacleID");
 		System.out.println(result+":result");
 	}
 

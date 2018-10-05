@@ -86,18 +86,27 @@ public static WebDriver setup(String browser) throws Exception{
 	public void toSwitchTab(int tabs)  {
 		Robot robot;
 		try {
-			for (int i = 0; i < tabs; i++) {
+			for (int i = 1; i <=tabs; i++) {
 			robot = new Robot();
 			robot.keyPress(KeyEvent.VK_CONTROL);
 	        robot.keyPress(KeyEvent.VK_TAB);
 	        robot.keyRelease(KeyEvent.VK_TAB);
 	        robot.keyRelease(KeyEvent.VK_CONTROL);
 			}
+			String Parentwindow = driver.getWindowHandle();
+			System.out.println(Parentwindow+"Parentwindow");
 			Set<String> allWh = driver.getWindowHandles();
+			System.out.println(allWh.size()+": windows are");
 			for (String wh : allWh) {
-	            System.out.println("ParentWindow="+wh);
-	            driver.switchTo().window(wh);
-	            System.out.println("Child="+driver.getCurrentUrl());
+				System.out.println(wh+":wh is");
+				if(!wh.equals(Parentwindow)) {
+					System.out.println(wh+"child browser");
+					driver.switchTo().window(wh);
+					break;
+				}
+	            /*System.out.println("ParentWindow="+wh);
+	            
+	            System.out.println("Child="+driver.getCurrentUrl());*/
 	}
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
