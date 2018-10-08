@@ -35,6 +35,14 @@ public class ConsignmentSummaryPage implements IConstantValues{
 	@FindBy(xpath="//strong[text()='Consignment Information']")
 	public WebElement consignmentInformation;
 	
+	@FindBy(xpath="//table[@id='tracking-history']/tbody/tr[@ng-repeat='evtData in data.events']/td[4]")
+	public WebElement consignStatusCol;
+	
+	@FindBy(xpath="(//table[@id='tracking-history']/tbody/tr[@ng-repeat='evtData in data.events']/td[4])[1]")
+	public WebElement consignStatusFirst;
+	
+	
+	
 	//CARDIT Fields
 	@FindBy(xpath="//span[@id='ConsignmentDocumentNumber']")
 	public WebElement consignNumber;

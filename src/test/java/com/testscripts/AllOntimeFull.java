@@ -1,28 +1,36 @@
 package com.testscripts;
 
-
-
-
-
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.common.BaseTest;
 import com.common.CommonFunctions;
+import com.common.WebTable;
 import com.common.XLUtilities;
 import com.pages.ConsignmentDetailsPage;
 import com.pages.ConsignmentSummaryPage;
+import com.pages.EventDetailsPage;
 import com.pages.SearchConsignmentPage;
 
 public class AllOntimeFull extends BaseTest {
 	SearchConsignmentPage scp;
 	ConsignmentDetailsPage cdp;
+	ConsignmentSummaryPage csp;
 	CommonFunctions cf;
 	XLUtilities ul; 
+	WebTable wt;
+	EventDetailsPage edp;
 	String errorMessage="errormessage";
-	String SheetName="consignmentnumber";
-	String ReceptacleID;
+	String TestData="TestData";
+	String AllOntime="AllOntime";
+	String Colheader1="ConsignmentNO";
+	String Colheader3="Status";
+	String consignNo;
+	String status1;
 	String ReceptacleID2;
 	
 	@BeforeClass
@@ -32,10 +40,14 @@ public class AllOntimeFull extends BaseTest {
 	cf= new CommonFunctions();
 	ul=new XLUtilities();
 	cdp=new ConsignmentDetailsPage(driver);
-	ReceptacleID=ul.getvalueFromxcell(EXCEL_PATH, SheetName, "Reshma", "Ayesha");
-	ReceptacleID2=ul.getvalueFromxcell(EXCEL_PATH, SheetName, "Reshma", "Heena");
+	csp = new ConsignmentSummaryPage(driver);
+	wt=new WebTable();
+	edp=new EventDetailsPage(driver);
+	consignNo=ul.getvalueFromxcell(EXCEL_PATH, TestData, AllOntime, Colheader1);
+	status1=ul.getvalueFromxcell(EXCEL_PATH, TestData, AllOntime, Colheader3);
+	//ReceptacleID2=ul.getvalueFromxcell(EXCEL_PATH, SheetName, "Reshma", "Heena");
 	}
-	@Test
+	@Test(enabled=false)
 	public void validateCurrentStatus() throws Exception {
 	//cf.click(cdp.ReceptacleID(ReceptacleID2), "working");
 		/*scp.navigateToSearchConsignment();
@@ -56,6 +68,29 @@ public class AllOntimeFull extends BaseTest {
 		//cf.click(element, "");
 		
 	}
+	@Test
+	public void validateConsignmentStatuses() throws InterruptedException {
+		cf.click(scp.searchConsignment, "searchConsignment");
+		cf.sendKeys(scp.consignmentNumber, consignNo, "consignmentNumber");
+		cf.click(scp.findItem, "findItem");
+		//toSwitchTab(2);
+		driver.get("http://npermg397:8090/CTS/#!/consignments/PREC01048239");
+		Thread.sleep(2000);
+		edp.getspecificrow("Event","PRECON(14)","Consignment Status","Count Flag");
+		edp.getspecificrow("Event","CARDIT(9)","Consignment Status","Count Flag");
+		edp.getspecificrow("Event","En route (31)","Consignment Status","Count Flag");
+		edp.getspecificrow("Event","Received (74)","Consignment Status","Count Flag");
+		edp.getspecificrow("Event","Delivered (21)","Consignment Status","Count Flag");
+		edp.getspecificrow("Event","N/A","Consignment Status","Count Flag");
+		/*String statusOne = csp.consignStatusFirst.getText();
+		Assert.assertEquals(status1, statusOne);
+		System.out.println(statusOne);*/
+		
+		
+		
+		
+	}
+	
 	
 	@Test(enabled=false)
 	public void  validatePreconDetails() {

@@ -9,11 +9,12 @@ import org.openqa.selenium.By;
 
 public class WebTable extends BaseTest {
 	
+	private static final String String = null;
 	private WebElement _webTable;
 
-	public WebTable(WebElement webTable) {
+	/*public WebTable(WebElement webTable) {
 		set_webTable(webTable);
-	}
+	}*/
 
 	public WebElement get_webTable() {
 		return _webTable;
@@ -75,8 +76,85 @@ public class WebTable extends BaseTest {
 		}
 	}
 	
+	public List<WebElement> header() {
+		
+		List<WebElement> findElements = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/thead/tr/th"));
+		
+		return findElements;
+	}
 	
-	
+	public int getheaderCount() {
+		
+	  // List<WebElement> tableRows = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/thead/tr/th"));
+	   return header().size();
+	}
+	public int getheaderindex(String columnText) {
+		System.out.println("entered");
+		int hsize = getheaderCount();
+		int i;
+		String text = null;
+		for (i = 0; i <hsize; i++) {
+			 text = header().get(i).getText();
+					 if(text.equalsIgnoreCase(columnText)) {
+						 System.out.println(text+"columnText is");
+						break;
+					 }
+		}
+		
+		return i+1;
+}
+	public List<WebElement> row(String columnText) {
+		int i = getheaderindex(columnText);
+		List<WebElement> findElements = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr/td["+i+"]"));
+		
+		return findElements;
+	}
+	public int getrowCount(String columnText) {
+		int size = row(columnText).size();
+		  // List<WebElement> tableRows = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/thead/tr/th"));
+		  System.out.println(size+" :rowsize is:");
+		return size;
+		}
+	public int getrowindex(String columnText,String rowText) {
+		System.out.println("entered row");
+		int rsize = getrowCount(columnText);
+		int i;
+		String text = null;
+		for (i = 0; i <rsize; i++) {
+			 text = row(columnText).get(i).getText();
+			 System.out.println(text+": row text is");
+					 if(text.equalsIgnoreCase(rowText)) {
+						 System.out.println(text+":equal rowText is");
+						break;
+					 }
+		}
+		System.out.println("rowindex");
+		System.out.println(i+1);
+		return i+1;
+}
+	public void getrowindex1(String columnText, String rowText) {
+		int Hindex = getheaderindex(columnText);
+		String text = null;
+		System.out.println("Hindex:"+Hindex);
+		 List<WebElement> Rdata = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr/td["+Hindex+"]"));
+		 			int i = Rdata.size();
+		/*if(Rdata.get(i).getText().equalsIgnoreCase("Precon")) {
+			 List<WebElement> rowvalue = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr["+i+"]/td["+Hindex+"]"));
+			 int size = rowvalue.size();
+			 System.out.println(size+"rowvalues");
+			 for (int j = 0; j < size; j++) {
+				if(rowvalue.get(j).getText().equalsIgnoreCase("Precon")||rowvalue.get(j).getText().equalsIgnoreCase("NA")) {
+					System.out.println("verified");
+				}
+				 
+			}
+			 
+			 
+		 }*/
+		 			
+		
+		
+	}
 	
 }
 
