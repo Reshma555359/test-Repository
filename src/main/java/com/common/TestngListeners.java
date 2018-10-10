@@ -1,5 +1,7 @@
 package com.common;
 
+import javax.swing.Scrollable;
+
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -42,6 +44,8 @@ public class TestngListeners implements ITestListener {
 
 	public void onTestSuccess(ITestResult result) {
 	//System.out.println("Successfully completed testcase: "+result.getName());
+		System.out.println("Passed testcase: "+result.getName());
+		b.takeScreeshot("Passed test script");
 		
 	}
 

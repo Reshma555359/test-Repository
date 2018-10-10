@@ -110,7 +110,7 @@ public class XLUtilities implements IConstantValues {
 				System.out.println(rowIndex+":rowIndex");
 		System.out.println(colIndex+":colIndex");*/
 	//ul.clickFromExcel(EXCEL_PATH, "consignmentnumber", "Reshma", "Ayesha");
-		String result=ul.getvalueFromxcell(EXCEL_PATH, "TestData", "CommonTestData", "ReceptacleID");
+		String result=ul.getvalueFromxcell(EXCEL_PATH, "TestData", "AllLateDiscrepancy", "Event_Cardit");
 		System.out.println(result+":result");
 	}
 
@@ -161,6 +161,8 @@ public class XLUtilities implements IConstantValues {
 			try {
 				if(columnId.equalsIgnoreCase(sh.getRow(0).getCell(i).toString())) {
 					//System.out.println("loop entered");
+					String string = sh.getRow(0).getCell(i).toString();
+					//System.out.println(string+"text is");
 					break;
 				}
 			} catch (Exception e) {

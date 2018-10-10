@@ -9,7 +9,6 @@ import org.openqa.selenium.By;
 
 public class WebTable extends BaseTest {
 	
-	private static final String String = null;
 	private WebElement _webTable;
 
 	/*public WebTable(WebElement webTable) {
@@ -46,7 +45,6 @@ public class WebTable extends BaseTest {
 	
 	public WebElement getCellEditor(int rowIdx, int colIdx, int editorIdx) throws NoSuchElementException {
 		try {
-			
 			List<WebElement> tableRows = _webTable.findElements(By.tagName("tr"));
 			WebElement currentRow = tableRows.get(rowIdx-1);
 			List<WebElement> tableCols = currentRow.findElements(By.tagName("td"));
@@ -61,7 +59,6 @@ public class WebTable extends BaseTest {
 	
 	public WebElement selectCellCalendar(int rowIdx, int colIdx) throws NoSuchElementException {
 		try {
-			
 			List<WebElement> tableRows = _webTable.findElements(By.tagName("tr"));
 			WebElement currentRow = tableRows.get(rowIdx-1);
 			List<WebElement> tableCols = currentRow.findElements(By.tagName("td"));
@@ -70,21 +67,17 @@ public class WebTable extends BaseTest {
 			//String s = cell.getText();
 			//WebElement cellEditor = cell.findElements(By.cssSelector("a.ui-state-default")).get(labelIdx);
 			return cell;
-			
 		} catch (NoSuchElementException e) {
 			throw new NoSuchElementException("Failed to get cell editor");
 		}
 	}
 	
 	public List<WebElement> header() {
-		
 		List<WebElement> findElements = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/thead/tr/th"));
-		
 		return findElements;
 	}
 	
 	public int getheaderCount() {
-		
 	  // List<WebElement> tableRows = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/thead/tr/th"));
 	   return header().size();
 	}
@@ -96,23 +89,20 @@ public class WebTable extends BaseTest {
 		for (i = 0; i <hsize; i++) {
 			 text = header().get(i).getText();
 					 if(text.equalsIgnoreCase(columnText)) {
-						 System.out.println(text+"columnText is");
+						 //System.out.println(text+"columnText is");
 						break;
 					 }
 		}
-		
 		return i+1;
 }
 	public List<WebElement> row(String columnText) {
 		int i = getheaderindex(columnText);
 		List<WebElement> findElements = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr/td["+i+"]"));
-		
 		return findElements;
 	}
 	public int getrowCount(String columnText) {
 		int size = row(columnText).size();
-		  // List<WebElement> tableRows = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/thead/tr/th"));
-		  System.out.println(size+" :rowsize is:");
+		//System.out.println(size+" :rowsize is:");
 		return size;
 		}
 	public int getrowindex(String columnText,String rowText) {
@@ -124,18 +114,18 @@ public class WebTable extends BaseTest {
 			 text = row(columnText).get(i).getText();
 			 System.out.println(text+": row text is");
 					 if(text.equalsIgnoreCase(rowText)) {
-						 System.out.println(text+":equal rowText is");
+						 //System.out.println(text+":equal rowText is");
 						break;
 					 }
 		}
-		System.out.println("rowindex");
-		System.out.println(i+1);
+		//System.out.println("rowindex");
+		//System.out.println(i+1);
 		return i+1;
 }
 	public void getrowindex1(String columnText, String rowText) {
 		int Hindex = getheaderindex(columnText);
 		String text = null;
-		System.out.println("Hindex:"+Hindex);
+		//System.out.println("Hindex:"+Hindex);
 		 List<WebElement> Rdata = driver.findElements(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr/td["+Hindex+"]"));
 		 			int i = Rdata.size();
 		/*if(Rdata.get(i).getText().equalsIgnoreCase("Precon")) {
@@ -146,14 +136,8 @@ public class WebTable extends BaseTest {
 				if(rowvalue.get(j).getText().equalsIgnoreCase("Precon")||rowvalue.get(j).getText().equalsIgnoreCase("NA")) {
 					System.out.println("verified");
 				}
-				 
 			}
-			 
-			 
 		 }*/
-		 			
-		
-		
 	}
 	
 }

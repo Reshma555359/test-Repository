@@ -4,17 +4,25 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-public class CommonFunctions {
-	WebDriver driver = null;
+public class CommonFunctions extends BaseTest {
+	
+	//This method is to scroll down to bottom
+	public void scrollDown(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) BaseTest.driver();;
+		int x = element.getLocation().getX();
+		int y = element.getLocation().getY();
+		System.out.println("X"+x+"Y"+y);
+		js.executeScript("window.scrollBy("+x+","+y+")");
+		System.out.println("Scroll is working");
+		
+	}
 	
 	// This method verify whether the element is present or not
 	public boolean verifyElement_IsDisplayed(WebElement element, String elementTitle){
@@ -45,7 +53,18 @@ public class CommonFunctions {
 			Assert.fail(elementTitle + " - Element is NOT Present");
 		}
 	}
+	public void verifyElement_text(WebElement element, String expectedText,String elemetTittle) throws Exception{
+		String text = null;
+	try {
+		text = element.getText();
 		
+	}catch(Exception e) {
+		
+	}finally {
+		System.out.println("Verifying elemet text: "+elemetTittle);
+		Assert.assertEquals(text, expectedText);
+	}
+	}
 	public void verifyElement_NOTPresent(WebElement element, String elementTitle) throws Exception{
 		
 		System.out.println("Verify element - " + elementTitle + " - is NOT Present.");		
@@ -157,7 +176,7 @@ public class CommonFunctions {
 	
 	
 	public void doubleClick(WebElement element, String TableInfo) {		
-		Actions action = new Actions(driver);
+		Actions action = new Actions(BaseTest.driver());
 		action.doubleClick(element).perform();
 	}
 	

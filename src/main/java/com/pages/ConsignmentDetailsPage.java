@@ -52,7 +52,8 @@ public class ConsignmentDetailsPage extends BaseTest {
 		  System.out.println("entered");
 		  WebDriverWait wait = new WebDriverWait(driver, 10);
 		  System.out.println("inside");
-		  wait.until(ExpectedConditions.stalenessOf(element));
+		  wait.until(ExpectedConditions.visibilityOf(element));
+		  System.out.println("inside enter");
 		  return element;
 	 }
 

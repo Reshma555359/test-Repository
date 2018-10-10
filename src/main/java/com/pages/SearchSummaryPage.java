@@ -17,21 +17,29 @@ public class SearchSummaryPage {
 	public WebElement searchSummary;
 	
 	
-	@FindBy(xpath="//section/label[text()='Carrier']/following-sibling::span/div/div/div/button[@class='dropdown-toggle ng-binding ng-scope btn btn-default']/span")
+	@FindBy(xpath="//section/label[text()='Carrier']/following-sibling::span/div/div/button[@type='button']")
 	public WebElement carrier;
 	
-	@FindBy(xpath="//section/label[text()='Destination DO']/following-sibling::span/div/div/div/button[@class='dropdown-toggle ng-binding ng-scope btn btn-default']/span")
+	@FindBy(xpath="//section/label[text()='Destination DO']/following-sibling::span/div/div/button[@type='button']")
 	public WebElement destinationDO;
 	
-	@FindBy(xpath="//section/label[text()='Destination DO']/following-sibling::span/div/div/ul/li/a[text()=' Select All']")
+	@FindBy(xpath="//section/label[text()='Destination DO']/following-sibling::span/div/div/ul/li/a[contains(text(),' Select All')]")
 	public WebElement destinationDODropDown;
 	
-	@FindBy(xpath="//section/label[text()='Carrier']/following-sibling::span/div/div/ul/li/a[text()=' Select All']")
+	@FindBy(xpath="//section/label[text()='Carrier']/following-sibling::span/div/div/ul/li/a[contains(text(),'Select All')]")
 	public WebElement carrierDropDown;
 	
 	@FindBy(xpath="//button[text()='Search']")
 	public WebElement searchButton;
 	
+	@FindBy(xpath="//button[text()='Detailed View']")
+	public WebElement detailedView;
+	
+	@FindBy(xpath="//th[text()='SUMMARY DETAILS']")
+	public WebElement summaryDetails;
+	
+	@FindBy(xpath="//span[@class='glyphicon glyphicon-arrow-left']")
+	public WebElement backArrow;	
 	
 	
 	 public SearchSummaryPage(WebDriver driver){

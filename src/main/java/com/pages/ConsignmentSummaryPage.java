@@ -1,16 +1,25 @@
 package com.pages;
 
+import java.io.IOException;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
+import com.common.BaseTest;
 import com.common.IConstantValues;
 import com.common.Lib;
+import com.common.WebTable;
+import com.common.XLUtilities;
 
 public class ConsignmentSummaryPage implements IConstantValues{
 	
-	@FindBy(xpath="//h3[contains(.,'Current Status: ')]//span")
+	@FindBy(xpath="//h3[contains(.,'Current Status: ')]/span")
 	public WebElement currentStatus;
 	
 	@FindBy(xpath="//a[contains(.,'PRECON Details')]")
@@ -41,7 +50,8 @@ public class ConsignmentSummaryPage implements IConstantValues{
 	@FindBy(xpath="(//table[@id='tracking-history']/tbody/tr[@ng-repeat='evtData in data.events']/td[4])[1]")
 	public WebElement consignStatusFirst;
 	
-	
+	@FindBy(xpath="//h3[text()='Event Information']")
+	public WebElement eventInfoText;
 	
 	//CARDIT Fields
 	@FindBy(xpath="//span[@id='ConsignmentDocumentNumber']")
@@ -113,7 +123,15 @@ public class ConsignmentSummaryPage implements IConstantValues{
 	
 	@FindBy(xpath="//td[contains(@ng-bind,'eventLocation')]")
 	public WebElement eventLocation;
-			
+	
+	WebTable wt=new WebTable();
+	XLUtilities ul=new XLUtilities();
+	String TestData="TestData";
+	String AllOntime="AllOntime";
+	String Event_Precon="Event_Precon";
+	String Consignment_Status_Precon="Consignment Status_Precon";
+
+	
 	public ConsignmentSummaryPage(WebDriver driver){
         //This initElements method will create all WebElements
         PageFactory.initElements(driver, this);
@@ -135,7 +153,67 @@ public class ConsignmentSummaryPage implements IConstantValues{
   	  String expectedCurrentStatus = Lib.getCellValue(EXCEL_PATH,"consignmentsummary",k,j);
   	  return expectedCurrentStatus;
     }
-
 	
+public void getspecificrow(String columnText,String columnText2,String columnText3,String rowText1,String rowText2,String rowText3) throws EncryptedDocumentException, InvalidFormatException, IOException {
+		boolean result = false;
+		int rowindex = wt.getrowindex(columnText,rowText1);
+		int headindex1 = wt.getheaderindex(columnText);
+		int headindex2 = wt.getheaderindex(columnText2);
+		int headindex3 = wt.getheaderindex(columnText3);
+		WebElement row1 = BaseTest.driver.findElement(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr["+rowindex+"]/td["+headindex1+"]"));
+		WebElement row2 = BaseTest.driver.findElement(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr["+rowindex+"]/td["+headindex2+"]"));
+		WebElement row3 = BaseTest.driver.findElement(By.xpath("//section/h3[text()='Event Information']/following-sibling::table/tbody/tr["+rowindex+"]/td["+headindex3+"]"));
+		System.out.println(row1.getText()+" :row1");
+		System.out.println(row2.getText()+" :row2");
+		System.out.println(row3.getText()+" :row3");
+		if(row1.getText().equals(rowText1)) {
+			System.out.println("entered first if"+rowText1);
+			if((row2.getText().equals(rowText2))&&(row3.getText().equals(rowText3))){
+				System.out.println(" working validated:"+rowText1);
+				result=true;
+			}
+			else {
+				System.out.println("not working properly:"+rowText1);
+				//result=false;
+			}
+		}/*else if(row1.getText().contains(rowText)) {
+			if((row2.getText().equals(Consignment_Status_Cardit))&&(row3.getText().equals(Count_Flag_N))){
+				System.out.println("CARDIT working validated");
+			}
+			else {
+				System.out.println("CARDIT not working properly");
+			}
+		}else if(row1.getText().contains(rowText)) {
+			if((row2.getText().equals(Consignment_Status_Enroute))&&(row3.getText().equals(Count_Flag_N))){
+				System.out.println("ENROUTE working validated");
+			}
+			else {
+				System.out.println("ENROUTE not working properly");
+			}
+		}else if(row1.getText().contains(rowText)) {
+			if((row2.getText().equals(Consignment_Status_Received))&&(row3.getText().equals(Count_Flag_F))){
+				System.out.println("Received working validated");
+			}
+			else {
+				System.out.println("Received not working properly");
+			}
+		}else if(row1.getText().contains(rowText)) {
+			if((row2.getText().equals(Consignment_Status_Delivered))&&(row3.getText().equals(Count_Flag_F))){
+				System.out.println("DELIVERED working validated");
+			}
+			else {
+				System.out.println("DELIVERED not working properly");
+			}
+		}else if(row1.getText().contains(rowText)) {
+			if((row2.getText().equals(Consignment_Status_NA))&&(row3.getText().equals(Count_Flag_F))){
+				System.out.println("RECEIVED working validated");
+			}
+			else {
+				System.out.println("RECEIVED not working properly");
+			}
+		}*/
+		Assert.assertTrue(result);
+		
+	}
 	
 }

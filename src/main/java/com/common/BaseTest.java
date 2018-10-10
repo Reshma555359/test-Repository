@@ -13,12 +13,14 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
@@ -62,8 +64,11 @@ public static WebDriver setup(String browser) throws Exception{
 	public static void openURL() throws Exception {
 		String url=Lib.getProperty(CONFIG_PATH, "URL");
 		driver.get(url);
-	
-
+	}
+	public static void openURLCN(String text) throws Exception {
+		String url=Lib.getProperty(CONFIG_PATH, "URL");
+		driver.get(url+"/consignments/"+text);
+		System.out.println("url launched");
 	}
 	public static WebDriver driver() {
 		return driver;
@@ -82,11 +87,33 @@ public static WebDriver setup(String browser) throws Exception{
 			e.printStackTrace();
 		}
 	}
-	
-	public void toSwitchTab(int tabs)  {
+	public void tofindWindow(WebElement element) throws Exception  {
+		String Parentwindow = driver.getWindowHandle();
+		System.out.println(Parentwindow+"Parentwindow");
+		Set<String> allWh = driver.getWindowHandles();
+		int size = allWh.size();
+		System.out.println(allWh.size()+": windows before if");
+		while(size<2) {
+			System.out.println("ented while loop");
+				//toSwitchTab();
+				System.out.println("ented toSwitchTab loop");		
+		}
+		
+		for (String wh : allWh) {
+			System.out.println(wh+":wh is");
+			if(!wh.equals(Parentwindow)) {
+				System.out.println(wh+"child browser");
+				driver.switchTo().window(wh);
+				break;
+			}
+		}
+		
+	}
+	public void toSwitchTab(int tabs) throws Exception  {
 		Robot robot;
 		try {
-			for (int i = 1; i <=tabs; i++) {
+			for (int i = 0; i < tabs; i++) {
+				
 			robot = new Robot();
 			robot.keyPress(KeyEvent.VK_CONTROL);
 	        robot.keyPress(KeyEvent.VK_TAB);
@@ -96,7 +123,10 @@ public static WebDriver setup(String browser) throws Exception{
 			String Parentwindow = driver.getWindowHandle();
 			System.out.println(Parentwindow+"Parentwindow");
 			Set<String> allWh = driver.getWindowHandles();
-			System.out.println(allWh.size()+": windows are");
+			int size = allWh.size();
+			System.out.println(allWh.size()+": windows before if");
+			
+			System.out.println(allWh.size()+": windows after if");
 			for (String wh : allWh) {
 				System.out.println(wh+":wh is");
 				if(!wh.equals(Parentwindow)) {
@@ -104,9 +134,9 @@ public static WebDriver setup(String browser) throws Exception{
 					driver.switchTo().window(wh);
 					break;
 				}
-	            /*System.out.println("ParentWindow="+wh);
+	            System.out.println("ParentWindow="+wh);
 	            
-	            System.out.println("Child="+driver.getCurrentUrl());*/
+	            System.out.println("Child="+driver.getCurrentUrl());
 	}
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
@@ -114,7 +144,7 @@ public static WebDriver setup(String browser) throws Exception{
 		}
         
 	}
-	@AfterClass
+	@AfterTest
 	public void closeApplication()  {
 		driver.quit();
 	}
